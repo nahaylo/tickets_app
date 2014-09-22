@@ -9,7 +9,7 @@ class Ticket < ActiveRecord::Base
   validates_email_format_of :email, :message => 'is not looking good'
 
   before_create :generate_reference
-  after_create :send_email
+  after_create :send_email, :add_log
 
   private
 
@@ -22,5 +22,10 @@ class Ticket < ActiveRecord::Base
 
   def send_email
     TicketMailer.new_ticket(self).deliver
+  end
+
+  def add_log
+    logger.info "Created new ticket: #{self.reference}"
+    logger.debug self.to_json
   end
 end

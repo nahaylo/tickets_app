@@ -15,6 +15,7 @@ gem 'validates_email_format_of'
 group :development do
   gem 'mailcatcher'
   gem 'foreman'
+  gem 'quiet_assets'
   gem 'sqlite3'
   gem 'therubyracer',  platforms: :ruby
 end

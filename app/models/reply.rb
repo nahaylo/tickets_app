@@ -5,7 +5,7 @@ class Reply < ActiveRecord::Base
 
   validates_presence_of :body
 
-  after_create :assign_ticket, :update_ticket_status, :send_email
+  after_create :assign_ticket, :update_ticket_status, :send_email, :add_log
 
   private
 
@@ -19,5 +19,10 @@ class Reply < ActiveRecord::Base
 
   def send_email
     TicketMailer.replied(self.ticket).deliver
+  end
+
+  def add_log
+    logger.info "Created new reply: #{self.body}"
+    logger.debug self.attributes.to_s
   end
 end
