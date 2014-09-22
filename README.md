@@ -5,3 +5,7 @@ Install:
 
 Run:
 > foreman start
+
+Adminpanel login
+> user: 'admin@example.com', pass: 'password'
+> user: 'staff@example.com', pass: 'password'
