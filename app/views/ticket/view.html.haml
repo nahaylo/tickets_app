@@ -1,0 +1,52 @@
+= form_tag nil, class: 'form-horizontal', role: 'form' do
+  .form-group
+    = label_tag nil, 'Username', class: 'col-sm-3 control-label'
+    .col-sm-8
+      %p.form-control-static
+        = @ticket.user_name
+  .form-group
+    = label_tag nil, 'Email', class: 'col-sm-3 control-label'
+    .col-sm-8
+      %p.form-control-static
+        = @ticket.email
+  .form-group
+    = label_tag nil, 'Subject', class: 'col-sm-3 control-label'
+    .col-sm-8
+      %p.form-control-static
+        = @ticket.subject
+  .form-group
+    = label_tag nil, 'Status', class: 'col-sm-3 control-label'
+    .col-sm-8
+      %p.form-control-static
+        = @ticket.status.title
+  - @ticket.requests.each do |request|
+    .panel.panel-default
+      .panel-heading
+        = request.created_at
+      .panel-body
+        = request.body
+      .panel-footer
+        - if request.reply
+          = request.reply.body
+        - else
+          Waiting for reply...
+
+= form_for @ticket, url: update_ticket_path, method: :post, html: {class: 'form-horizontal', role: 'form'} do |f|
+
+  - if @ticket.errors.any?
+    .alert.alert-danger{role: 'alert'}
+      = pluralize(@ticket.errors.count, 'error')
+      prohibited this request from being created:
+      %ul
+        - @ticket.errors.full_messages.each do |msg|
+          %li
+            = msg
+
+  = f.fields_for :request, @request do |r|
+    .form-group
+      = r.label :body, 'New request', class: 'col-sm-3 control-label'
+      .col-sm-8
+        = r.text_area :body, class: 'form-control', placeholder: 'Enter your question'
+  .form-group
+    .col-sm-offset-3.col-sm-9
+      = f.button :submit, class: 'btn btn-default'

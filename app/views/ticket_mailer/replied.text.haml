@@ -1,0 +1,7 @@
+= "Hello #{@ticket.user_name}"
+===============================================
+
+Your ticket was successfully replied by staff.
+
+- url = url_for controller: :ticket, action: :view, hex: @ticket.reference, only_path: false
+= "View it: #{url}"

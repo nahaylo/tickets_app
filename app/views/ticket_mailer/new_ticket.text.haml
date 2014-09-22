@@ -1,0 +1,7 @@
+= "Welcome #{@ticket.user_name}"
+===============================================
+
+You have successfully created new ticket.
+
+- url = url_for controller: :ticket, action: :view, hex: @ticket.reference, only_path: false
+= "View it: #{url}"

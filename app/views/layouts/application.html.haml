@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %title= content_for?(:title) ? yield(:title) : 'Ticket System'
+    = stylesheet_link_tag :application, :media => 'all'
+    = javascript_include_tag :application
+    = csrf_meta_tags
+    = yield(:head)
+  %body
+    .container
+      .header{style: 'margin: 20px 0;'}
+        %ul.nav.nav-pills.pull-right
+          %li
+            %a{href: '/admin'} Admin Panel
+          %li
+            %a{href: '/create'} Create Ticket
+        %h3.text-muted Ticket System
+      .content
+        .panel.panel-default
+          .panel-body
+            = yield
+      .footer
+        %p &copy; Markiyan Matviyiv 2014

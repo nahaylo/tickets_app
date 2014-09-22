@@ -1,0 +1,31 @@
+= form_for @ticket, url: new_ticket_path, html: {class: 'form-horizontal', role: 'form'} do |f|
+
+  - if @ticket.errors.any?
+    .alert.alert-danger{role: 'alert'}
+      = pluralize(@ticket.errors.count, 'error')
+      prohibited this ticket from being created:
+      %ul
+        - @ticket.errors.full_messages.each do |msg|
+          %li
+            = msg
+
+  .form-group
+    = f.label :user_name, 'Username', class: 'col-sm-3 control-label'
+    .col-sm-8
+      = f.text_field :user_name, class: 'form-control', placeholder: 'Enter username'
+  .form-group
+    = f.label :email, 'Email', class: 'col-sm-3 control-label'
+    .col-sm-8
+      = f.text_field :email, class: 'form-control', placeholder: 'Enter email', type: 'email'
+  .form-group
+    = f.label :subject, 'Subject', class: 'col-sm-3 control-label'
+    .col-sm-8
+      = f.text_field :subject, class: 'form-control', placeholder: 'Enter subject'
+  = f.fields_for :request, @ticket.requests.first do |r|
+    .form-group
+      = r.label :body, 'Request', class: 'col-sm-3 control-label'
+      .col-sm-8
+        = r.text_area :body, class: 'form-control', placeholder: 'Enter your question'
+  .form-group
+    .col-sm-offset-3.col-sm-9
+      = f.button :submit, class: 'btn btn-default'
