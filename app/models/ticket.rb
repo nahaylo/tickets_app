@@ -9,8 +9,6 @@ class Ticket < ActiveRecord::Base
   validates_email_format_of :email, :message => 'is not looking good'
 
   before_create :generate_reference
-  before_create :set_status
-
   after_create :send_email
 
   private
@@ -20,10 +18,6 @@ class Ticket < ActiveRecord::Base
     s = SecureRandom.hex(1)
     t = SecureRandom.hex(1)
     self.reference = "#{f}-#{s}-#{f}-#{t}-#{f}"
-  end
-
-  def set_status
-    self.status = Status.find(1)
   end
 
   def send_email

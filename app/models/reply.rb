@@ -14,7 +14,7 @@ class Reply < ActiveRecord::Base
   end
 
   def update_ticket_status
-    self.ticket.update_attributes(status_id: 2)
+    self.ticket.update_attributes(status: Status.for_customer)
   end
 
   def send_email
